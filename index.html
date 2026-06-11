@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disponibilités Entraîneurs — Saison 2025/2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap');
+
+  :root {
+    --orange: #F47B20;
+    --orange-dark: #C85E0A;
+    --noir: #121212;
+    --gris-fonce: #1E1E1E;
+    --gris-moyen: #2E2E2E;
+    --gris-clair: #AAAAAA;
+    --blanc: #F5F5F5;
+    --fond: #181818;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--fond);
+    color: var(--blanc);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--noir);
+    border-bottom: 3px solid var(--orange);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .ball-icon {
+    width: 52px; height: 52px;
+    background: var(--orange);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .ball-icon::after {
+    content: '';
+    position: absolute;
+    width: 100%; height: 2px;
+    background: var(--noir);
+    opacity: .35;
+    top: 50%;
+  }
+  .ball-icon::before {
+    content: '';
+    position: absolute;
+    width: 2px; height: 100%;
+    background: var(--noir);
+    opacity: .35;
+    left: 50%;
+  }
+
+  header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.7rem;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  header h1 span { color: var(--orange); }
+  header p {
+    font-size: .85rem;
+    color: var(--gris-clair);
+    margin-top: 4px;
+    letter-spacing: .02em;
+  }
+
+  /* ── LAYOUT ── */
+  main {
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    background: var(--gris-fonce);
+    border-radius: 10px;
+    padding: 28px 30px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--orange);
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--orange);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .num {
+    background: var(--orange);
+    color: var(--noir);
+    font-size: .75rem;
+    font-weight: 900;
+    width: 22px; height: 22px;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── FIELDS ── */
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--gris-clair);
+    margin-bottom: 7px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    background: var(--gris-moyen);
+    border: 1px solid #3A3A3A;
+    border-radius: 6px;
+    padding: 11px 14px;
+    color: var(--blanc);
+    font-family: 'Barlow', sans-serif;
+    font-size: .95rem;
+    transition: border-color .2s;
+    outline: none;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--orange);
+    background: #333;
+  }
+
+  select option { background: var(--gris-moyen); }
+
+  textarea { resize: vertical; min-height: 90px; }
+
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* ── JOURS / CRÉNEAUX ── */
+  .jours-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .jour-toggle {
+    background: var(--gris-moyen);
+    border: 1px solid #3A3A3A;
+    border-radius: 6px;
+    padding: 10px 4px;
+    text-align: center;
+    cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: .8rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--gris-clair);
+    transition: all .15s;
+    user-select: none;
+  }
+  .jour-toggle:hover { border-color: var(--orange); color: var(--blanc); }
+  .jour-toggle.actif {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--noir);
+  }
+
+  .plage-row {
+    display: none;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    margin-top: 8px;
+    padding: 12px;
+    background: #252525;
+    border-radius: 6px;
+    border: 1px solid #3A3A3A;
+    animation: slideDown .2s ease;
+  }
+  .plage-row.visible { display: grid; }
+  .plage-row .sep { color: var(--gris-clair); font-size: .8rem; text-align: center; }
+  .plage-row label { margin-bottom: 4px; }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PÉRIODES D'ABSENCE ── */
+  .absence-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .absence-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+    padding: 12px;
+    background: #252525;
+    border-radius: 6px;
+    border: 1px solid #3A3A3A;
+  }
+
+  .btn-remove {
+    background: #3A1A1A;
+    border: 1px solid #6A2A2A;
+    border-radius: 6px;
+    color: #FF7777;
+    width: 36px; height: 36px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+    flex-shrink: 0;
+  }
+  .btn-remove:hover { background: #5A1A1A; }
+
+  .btn-add {
+    background: transparent;
+    border: 1.5px dashed #3A3A3A;
+    border-radius: 6px;
+    color: var(--gris-clair);
+    padding: 10px 18px;
+    cursor: pointer;
+    font-family: 'Barlow', sans-serif;
+    font-size: .88rem;
+    font-weight: 600;
+    transition: all .15s;
+    margin-top: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-add:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* ── LIEUX ── */
+  .lieu-checks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gris-moyen);
+    border: 1px solid #3A3A3A;
+    border-radius: 6px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: border-color .15s;
+    user-select: none;
+  }
+  .check-item:hover { border-color: var(--orange); }
+  .check-item input[type="checkbox"] { display: none; }
+  .check-box {
+    width: 18px; height: 18px;
+    border: 2px solid #4A4A4A;
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+    font-size: .7rem;
+  }
+  .check-item.checked .check-box {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--noir);
+  }
+  .check-item.checked { border-color: var(--orange); }
+  .check-label {
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--blanc);
+    text-transform: none;
+    letter-spacing: 0;
+    margin: 0;
+  }
+
+  /* ── SUBMIT ── */
+  .submit-area {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .btn-submit {
+    background: var(--orange);
+    border: none;
+    border-radius: 8px;
+    color: var(--noir);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 16px 50px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+  .btn-submit:hover { background: var(--orange-dark); transform: translateY(-1px); }
+  .btn-submit:active { transform: translateY(0); }
+
+  /* ── SUCCESS ── */
+  .success-banner {
+    display: none;
+    background: #0D2E0D;
+    border: 1.5px solid #3A7A3A;
+    border-radius: 8px;
+    padding: 18px 22px;
+    color: #7FD47F;
+    font-weight: 600;
+    font-size: .95rem;
+    text-align: center;
+    margin-top: 16px;
+  }
+  .success-banner.visible { display: block; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 560px) {
+    header { padding: 20px; }
+    header h1 { font-size: 1.3rem; }
+    .section { padding: 20px 18px; }
+    .row-2, .row-3 { grid-template-columns: 1fr; }
+    .jours-grid { grid-template-columns: repeat(4, 1fr); }
+    .lieu-checks { grid-template-columns: 1fr; }
+    .absence-item { grid-template-columns: 1fr 1fr; }
+    .absence-item .btn-remove { grid-column: span 2; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="ball-icon">🏀</div>
+  <div>
+    <h1>Disponibilités <span>Entraîneurs</span></h1>
+    <p>Saison 2025 / 2026 — Merci de remplir ce formulaire avant le 20 juin</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. Identité -->
+  <div class="section">
+    <div class="section-title"><span class="num">1</span> Informations personnelles</div>
+    <div class="row-2">
+      <div class="field">
+        <label>Prénom &amp; Nom</label>
+        <input type="text" id="nom" placeholder="Ex : Marie Dupont">
+      </div>
+      <div class="field">
+        <label>Catégorie entraînée</label>
+        <select id="categorie">
+          <option value="">— Choisir —</option>
+          <option>Micro Basket</option>
+          <option>Baby Basket</option>
+          <option>U9</option>
+          <option>U11 F</option>
+          <option>U11 G</option>
+          <option>U13 F1</option>
+          <option>U13 F2</option>
+          <option>U13 G1</option>
+          <option>U13 G2</option>
+          <option>U15 F</option>
+          <option>U15 G1</option>
+          <option>U15 G2</option>
+          <option>U18 F1</option>
+          <option>U18 F2</option>
+          <option>U18 G1</option>
+          <option>U18 G2</option>
+          <option>SF</option>
+          <option>SG1</option>
+          <option>SG2</option>
+          <option>Loisirs</option>
+        </select>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="prenom@exemple.fr">
+      </div>
+      <div class="field">
+        <label>Téléphone</label>
+        <input type="tel" id="tel" placeholder="06 00 00 00 00">
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Disponibilités -->
+  <div class="section">
+    <div class="section-title"><span class="num">2</span> Jours &amp; horaires disponibles</div>
+    <label style="margin-bottom:12px">Cochez vos jours disponibles, puis précisez la plage horaire :</label>
+
+    <div class="jours-grid" id="joursGrid">
+      <div class="jour-toggle" data-jour="Lun">Lun</div>
+      <div class="jour-toggle" data-jour="Mar">Mar</div>
+      <div class="jour-toggle" data-jour="Mer">Mer</div>
+      <div class="jour-toggle" data-jour="Jeu">Jeu</div>
+      <div class="jour-toggle" data-jour="Ven">Ven</div>
+      <div class="jour-toggle" data-jour="Sam">Sam</div>
+      <div class="jour-toggle" data-jour="Dim">Dim</div>
+    </div>
+
+    <div id="plagesContainer"></div>
+
+    <div class="field" style="margin-top:18px">
+      <label>Nombre d'entraînements souhaité par semaine</label>
+      <select id="maxSeances">
+        <option value="">— Choisir —</option>
+        <option>1 séance</option>
+        <option>2 séances</option>
+        <option>3 séances</option>
+        <option>4 séances ou plus</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 3. Lieux -->
+  <div class="section">
+    <div class="section-title"><span class="num">3</span> Lieux / gymnases préférés</div>
+    <label style="margin-bottom:12px">Sélectionnez les salles où vous pouvez intervenir :</label>
+    <div class="lieu-checks" id="lieuxGrid">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <input type="checkbox"><div class="check-box">✓</div>
+        <span class="check-label">Gymnase Brethous</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <input type="checkbox"><div class="check-box">✓</div>
+        <span class="check-label">Gymnase des Dagueys</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <input type="checkbox"><div class="check-box">✓</div>
+        <span class="check-label">Gymnase de Pomerol</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <input type="checkbox"><div class="check-box">✓</div>
+        <span class="check-label">Gymnase de Condat</span>
+      </div>
+    </div>
+    <div class="field" style="margin-top:14px">
+      <label>Autre lieu (préciser)</label>
+      <input type="text" id="autreHeu" placeholder="Ex : Salle municipale de…">
+    </div>
+  </div>
+
+  <!-- 4. Contraintes -->
+  <div class="section">
+    <div class="section-title"><span class="num">4</span> Contraintes &amp; remarques</div>
+    <div class="field">
+      <label>Contraintes particulières</label>
+      <input type="text" id="contraintes" placeholder="Ex : Pas d'entraînement avant 21h">
+    </div>
+    <div class="field">
+      <label>Souhaitez-vous co-entraîner avec une autre catégorie ?</label>
+      <div style="display:flex; gap:12px; margin-bottom:12px">
+        <div class="check-item" onclick="toggleCocoach(this, 'oui')" id="cocoach-oui" style="flex:1; justify-content:center">
+          <input type="radio" name="cocoach"><div class="check-box" style="border-radius:50%">✓</div>
+          <span class="check-label">Oui</span>
+        </div>
+        <div class="check-item" onclick="toggleCocoach(this, 'non')" id="cocoach-non" style="flex:1; justify-content:center">
+          <input type="radio" name="cocoach"><div class="check-box" style="border-radius:50%">✓</div>
+          <span class="check-label">Non</span>
+        </div>
+      </div>
+      <textarea id="cocoach-precisions" placeholder="Si oui, précisez avec quelle(s) catégorie(s) si vous avez une préférence…"></textarea>
+    </div>
+    <div class="field">
+      <label>Informations complémentaires</label>
+      <textarea id="notes" placeholder="Tout ce qui peut aider à l'organisation…"></textarea>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <div class="submit-area">
+    <button class="btn-submit" onclick="soumettre()">✔ Envoyer mes disponibilités</button>
+    <div class="success-banner" id="successBanner">
+      ✅ Merci ! Vos disponibilités ont bien été enregistrées. Le responsable planning vous contactera si besoin.
+    </div>
+  </div>
+
+</main>
+
+<script>
+  /* ── JOURS TOGGLE ── */
+  document.querySelectorAll('.jour-toggle').forEach(el => {
+    el.addEventListener('click', () => {
+      el.classList.toggle('actif');
+      const jour = el.dataset.jour;
+      const existing = document.getElementById('plage-' + jour);
+      if (el.classList.contains('actif')) {
+        const div = document.createElement('div');
+        div.className = 'plage-row visible';
+        div.id = 'plage-' + jour;
+        div.innerHTML = `
+          <div class="field">
+            <label>${jour} — Début</label>
+            <input type="time" value="18:00">
+          </div>
+          <div class="sep">→</div>
+          <div class="field">
+            <label>Fin</label>
+            <input type="time" value="20:00">
+          </div>`;
+        document.getElementById('plagesContainer').appendChild(div);
+      } else if (existing) {
+        existing.remove();
+      }
+    });
+  });
+
+  /* ── LIEUX TOGGLE ── */
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+    el.querySelector('input').checked = el.classList.contains('checked');
+  }
+
+  /* ── CO-ENTRAÎNEMENT OUI/NON ── */
+  function toggleCocoach(el, val) {
+    document.getElementById('cocoach-oui').classList.remove('checked');
+    document.getElementById('cocoach-non').classList.remove('checked');
+    el.classList.add('checked');
+  }
+
+  /* ── SUBMIT → GOOGLE SHEETS ── */
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbxuzHIHp1f3dUvARQUdmM0cgTXntj2cVaE2iP2abAWlF1123w3yy3rYEwkAPEwtSlQZ3A/exec";
+
+  async function soumettre() {
+    const nom = document.getElementById('nom').value.trim();
+    if (!nom) { alert('Merci de renseigner votre nom.'); return; }
+
+    // Jours & horaires
+    const horaires = [];
+    document.querySelectorAll('.plage-row.visible').forEach(row => {
+      const label = row.querySelector('label').textContent.split('—')[0].trim();
+      const inputs = row.querySelectorAll('input[type="time"]');
+      horaires.push(`${label} ${inputs[0].value}→${inputs[1].value}`);
+    });
+
+    // Gymnases cochés
+    const gymnases = [];
+    document.querySelectorAll('.check-item.checked .check-label').forEach(el => {
+      gymnases.push(el.textContent);
+    });
+
+    // Co-entraînement
+    const cocoachOui = document.getElementById('cocoach-oui').classList.contains('checked');
+    const cocoachNon = document.getElementById('cocoach-non').classList.contains('checked');
+    const cocoach = cocoachOui ? 'Oui' : cocoachNon ? 'Non' : '';
+
+    const data = {
+      nom,
+      categorie:           document.getElementById('categorie').value,
+      email:               document.getElementById('email').value,
+      tel:                 document.getElementById('tel').value,
+      horaires:            horaires.join(', ') || '—',
+      nbSeances:           document.getElementById('maxSeances').value,
+      gymnases:            gymnases.join(', ') || '—',
+      autreLieu:           document.getElementById('autreHeu').value,
+      contraintes:         document.getElementById('contraintes').value,
+      cocoach,
+      cocoachPrecisions:   document.getElementById('cocoach-precisions').value,
+      notes:               document.getElementById('notes').value,
+    };
+
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = '⏳ Envoi en cours…';
+    btn.disabled = true;
+    btn.style.opacity = '.6';
+    btn.style.cursor = 'default';
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      btn.textContent = '✔ Envoyé !';
+      document.getElementById('successBanner').classList.add('visible');
+      document.getElementById('successBanner').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (err) {
+      btn.textContent = '✔ Envoyer mes disponibilités';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+      alert('Une erreur est survenue. Vérifiez votre connexion et réessayez.');
+    }
+  }
+</script>
+</body>
+</html>
